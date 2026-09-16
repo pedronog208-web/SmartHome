@@ -37,11 +37,6 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/empresa/{empresaId}")
-    public String ConsultaUsuarioPorEmpresa(@PathVariable Long empresaId){
-        return "Consultou o Usuário pela Empresa <" + empresaId + ">";
-    }
-
     @PostMapping
     public ResponseEntity<UsuarioResponse> CadastrarUsuario(@RequestBody UsuarioRequest usuarioRequest){
 

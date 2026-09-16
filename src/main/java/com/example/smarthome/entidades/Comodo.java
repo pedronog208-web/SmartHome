@@ -1,7 +1,13 @@
 package com.example.smarthome.entidades;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Comodo {
 
     public Comodo(){}
@@ -12,10 +18,13 @@ public class Comodo {
         this.categoria = categoria;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String categoria;
     private LocalDateTime dataAtualizacao;
+    private String status;
 
     public Long getId() {
         return this.id;
@@ -47,5 +56,14 @@ public class Comodo {
 
     public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

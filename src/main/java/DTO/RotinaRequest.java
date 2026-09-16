@@ -7,8 +7,7 @@ public class RotinaRequest {
     public RotinaRequest(){}
 
     private String nome;
-    private Comodo comodo;
-    private String status;
+    private Boolean status;
 
     public String getNome(){
         return nome;
@@ -19,19 +18,10 @@ public class RotinaRequest {
 
 
 
-    public Comodo getComodo(){
-        return this.comodo;
-    }
-    public void setComodo(Comodo comodo){
-        this.comodo = comodo;
-    }
-
-
-
-    public String getStatus(){
+    public Boolean getStatus(){
         return this.status;
     }
-    public void setStatus(String status){
+    public void setStatus(Boolean status){
         this.status = status;
     }
 
