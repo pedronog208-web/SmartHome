@@ -13,7 +13,7 @@ public class Rotina {
 
     public Rotina(){}
 
-    public Rotina(String nome, Boolean status) {
+    public Rotina(String nome, String status) {
         this.id = 1L;
         this.nome = nome;
         this.status = status;
@@ -23,7 +23,7 @@ public class Rotina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private Boolean status;
+    private String status;
     private String statusDelete;
 
     public Long getId() {
@@ -42,14 +42,13 @@ public class Rotina {
     }
 
 
-
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
-    public void setStatus(Boolean status) {
+
+    public void setStatus(String status) {
         this.status = status;
     }
-
 
     public String getStatusDelete() {
         return statusDelete;

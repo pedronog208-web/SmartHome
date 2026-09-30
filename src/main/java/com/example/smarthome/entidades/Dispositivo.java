@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 public class Dispositivo {
 
     public Dispositivo(){
-        this.id = 1L;
     }
 
-    public Dispositivo(String nome, String categoria, Boolean status, Boolean conexao, double consumoWatts){
-        this.id = 1000L;
+    public Dispositivo(String nome, String categoria, String status, Boolean conexao, double consumoWatts){
         this.nome = nome;
         this.categoria = categoria;
         this.status = status;
@@ -28,7 +26,7 @@ public class Dispositivo {
     private Long id;
     private String nome;
     private String categoria;
-    private Boolean status;
+    private String status;
     private Boolean conexao;
     private double consumoWatts;
     private LocalDateTime dataAtualizacao;
@@ -59,16 +57,13 @@ public class Dispositivo {
         this.categoria = categoria;
     }
 
-
-
-    public Boolean getStatus() {
-        return this.status;
+    public String getStatus() {
+        return status;
     }
-    public void setStatus(Boolean status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
-
-
 
     public Boolean getConexao(){
         return this.conexao;

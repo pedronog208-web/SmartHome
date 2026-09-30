@@ -7,23 +7,21 @@ public class RotinaRequest {
     public RotinaRequest(){}
 
     private String nome;
-    private Boolean status;
+    private String status;
 
-    public String getNome(){
+    public String getNome() {
         return nome;
     }
-    public void setNome(String nome){
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-
-
-    public Boolean getStatus(){
-        return this.status;
+    public String getStatus() {
+        return status;
     }
-    public void setStatus(Boolean status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
-
-
 }

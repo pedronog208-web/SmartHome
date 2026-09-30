@@ -1,9 +1,9 @@
 package com.example.smarthome.controllers;
 
-import DTO.AtualizaStatusUsuarioRequest;
-import DTO.UsuarioRequest;
-import DTO.UsuarioResponse;
+import DTO.*;
+import com.example.smarthome.entidades.Empresa;
 import com.example.smarthome.entidades.Usuario;
+import com.example.smarthome.repository.EmpresaRepository;
 import com.example.smarthome.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     @GetMapping
     public List<Usuario> ConsultaUsuario(){
@@ -35,6 +37,11 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuario);
 
+    }
+
+    @GetMapping("/listar")
+    public List<UsuarioConsultaResponse> listaTodos(){
+        return usuarioRepository.findAll().stream().map(UsuarioConsultaResponse::new).toList();
     }
 
     @PostMapping
@@ -66,6 +73,15 @@ public class UsuarioController {
 
 
         if (usuarioBanco != null){
+
+
+            var empresaBanco = empresaRepository.findById(usuarioBanco.getId()).orElse(null);
+
+            if (empresaBanco == null){
+                return ResponseEntity.notFound().build();
+            }
+
+            usuarioBanco.setEmpresa(empresaBanco);
             usuarioBanco.setNome(usuarioRequest.getNome());
             usuarioBanco.setCpf(usuarioRequest.getCpf());
             usuarioBanco.setDataNascimento(usuarioRequest.getDataNascimento());

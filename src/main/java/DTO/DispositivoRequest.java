@@ -8,7 +8,7 @@ public class DispositivoRequest {
 
     private String nome;
     private String categoria;
-    private Boolean status;
+    private String status;
     private Boolean conexao;
     private double consumoWatts;
 
@@ -27,14 +27,13 @@ public class DispositivoRequest {
         this.categoria = categoria;
     }
 
-
-    public Boolean getStatus(){
-        return this.status;
+    public String getStatus() {
+        return status;
     }
-    public void setStatus(Boolean status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
-
 
     public Boolean getConexao(){
         return this.conexao;

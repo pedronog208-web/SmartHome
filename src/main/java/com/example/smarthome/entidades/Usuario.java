@@ -1,10 +1,7 @@
 package com.example.smarthome.entidades;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -30,6 +27,19 @@ public class Usuario {
     private LocalDateTime dataAtualizacao;
     private String status;
     private String senha;
+
+    @ManyToOne
+    @JoinColumn (name = "empresa_id", referencedColumnName = "id")
+    private Empresa empresa;
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+
 
     public Long getId() {
         return this.id;

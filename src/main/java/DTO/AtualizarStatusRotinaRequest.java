@@ -4,13 +4,13 @@ public class AtualizarStatusRotinaRequest {
 
     public AtualizarStatusRotinaRequest(){}
 
-    private Boolean status;
+    private String status;
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
