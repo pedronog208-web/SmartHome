@@ -12,8 +12,10 @@ public class UsuarioConsultaResponse {
         this.nome = usuario.getNome();
         this.dataNascimento = usuario.getDataNascimento();
         this.id = usuario.getId();
-        this.empresa_id = usuario.getEmpresa().getId();
-        this.razaoSocialEmpresa = usuario.getEmpresa().getRazaoSocial();
+        if(usuario.getEmpresa() != null) {
+            this.empresa_id = usuario.getEmpresa().getId();
+            this.razaoSocialEmpresa = usuario.getEmpresa().getRazaoSocial();
+        }
     }
 
     private Long empresa_id;
