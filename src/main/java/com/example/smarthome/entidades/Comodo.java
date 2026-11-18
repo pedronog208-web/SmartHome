@@ -13,7 +13,6 @@ public class Comodo {
     public Comodo(){}
 
     public Comodo(String nome, String categoria){
-        this.id = 1L;
         this.nome = nome;
         this.categoria = categoria;
     }

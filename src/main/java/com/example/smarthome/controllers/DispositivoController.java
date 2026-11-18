@@ -4,7 +4,9 @@ import DTO.AtualizarConexaoDispositivoRequest;
 import DTO.AtualizarStatusDispositivoRequest;
 import DTO.DispositivoRequest;
 import DTO.DispositivoResponse;
+import com.example.smarthome.entidades.Comodo;
 import com.example.smarthome.entidades.Dispositivo;
+import com.example.smarthome.repository.ComodoRepository;
 import com.example.smarthome.repository.DispositivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,8 @@ public class DispositivoController{
 
     @Autowired
     private  DispositivoRepository dispositivoRepository;
-
+    @Autowired
+    private ComodoRepository comodoRepository;
 
 
     @GetMapping
@@ -42,18 +45,26 @@ public class DispositivoController{
     @PostMapping
     public ResponseEntity<DispositivoResponse> CadastrarDispositivo(@RequestBody DispositivoRequest dispositivoRequest){
 
+
         Dispositivo dispositivoBanco = new Dispositivo();
 
-        dispositivoBanco.setNome(dispositivoRequest.getNome());
-        dispositivoBanco.setCategoria(dispositivoRequest.getCategoria());
-        dispositivoBanco.setStatus(dispositivoRequest.getStatus());
-        dispositivoBanco.setConexao(dispositivoRequest.getConexao());
-        dispositivoBanco.setConsumoWatts(dispositivoRequest.getConsumoWatts());
+        Comodo comodoBanco = comodoRepository
+                .findById(dispositivoRequest.getComodoId())
+                .orElse(null);
 
-        dispositivoRepository.save(dispositivoBanco);
+        if (comodoBanco != null) {
+            dispositivoBanco.setNome(dispositivoRequest.getNome());
+            dispositivoBanco.setCategoria(dispositivoRequest.getCategoria());
+            dispositivoBanco.setStatus(dispositivoRequest.getStatus());
+            dispositivoBanco.setConexao(dispositivoRequest.getConexao());
+            dispositivoBanco.setConsumoWatts(dispositivoRequest.getConsumoWatts());
+            dispositivoBanco.setComodo(comodoBanco);
 
-        return ResponseEntity.ok(new DispositivoResponse(dispositivoBanco.getId(), "Dispositivo Cadastrado com Sucesso!"));
+            dispositivoRepository.save(dispositivoBanco);
 
+            return ResponseEntity.ok(new DispositivoResponse(dispositivoBanco.getId(), "Dispositivo Cadastrado com Sucesso!"));
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PatchMapping("/{id}/status")

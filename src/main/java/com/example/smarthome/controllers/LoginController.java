@@ -5,9 +5,14 @@ import DTO.LoginResponse;
 import com.example.smarthome.entidades.Usuario;
 import com.example.smarthome.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @RestController
 @RequestMapping("/login")
@@ -18,26 +23,23 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public ResponseEntity<LoginResponse> logar(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<LoginResponse> logar(
+            @RequestBody LoginRequest loginRequest) {
 
-        //Usuario usuarioBanco = usuarioRepository.findAll();
+        if (usuarioRepository.existsUsuarioByCpfAndSenha(
+                loginRequest.getLogin(),
+                loginRequest.getSenha())) {
 
+            LoginResponse resposta = new LoginResponse();
+            resposta.setMensagem("Login realizado com sucesso!");
 
-
-        //consulta de usuario no banco
-
-        if (usuarioRepository.existsUsuarioByCpfAndSenha(loginRequest.getLogin(), loginRequest.getSenha()) ){
-
-            LoginResponse loginResponse = new LoginResponse();
-
-            loginResponse.setMensagem("Bem Vindo!");
-
-            return ResponseEntity.ok(loginResponse);
+            return ResponseEntity.ok(resposta);
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        LoginResponse resposta = new LoginResponse();
+        resposta.setMensagem("CPF ou senha inválidos.");
 
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(resposta);
     }
-
-
 }

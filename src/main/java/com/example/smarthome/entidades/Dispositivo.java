@@ -1,9 +1,6 @@
 package com.example.smarthome.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -33,7 +30,9 @@ public class Dispositivo {
     private String statusDelete;
 
 
-
+    @ManyToOne
+    @JoinColumn(name = "comodo_id")
+    private Comodo comodo;
 
 
     public Long getId(){
@@ -96,6 +95,14 @@ public class Dispositivo {
 
     public void setStatusDelete(String statusDelete) {
         this.statusDelete = statusDelete;
+    }
+
+    public Comodo getComodo() {
+        return comodo;
+    }
+
+    public void setComodo(Comodo comodo) {
+        this.comodo = comodo;
     }
 }
 

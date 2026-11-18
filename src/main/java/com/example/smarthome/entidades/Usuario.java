@@ -10,10 +10,10 @@ import java.util.Set;
 @Entity
 public class Usuario {
 
-    public Usuario(){}
+    public Usuario() {
+    }
 
     public Usuario(String nome, String Cpf, String dataNascimento) {
-        this.id = 1000L;
         this.nome = nome;
         this.cpf = Cpf;
         this.dataNascimento = dataNascimento;
@@ -30,55 +30,34 @@ public class Usuario {
     private String status;
     private String senha;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "usuario_cursos",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "curso_id")
-    )
-    private Set<Curso> cursos = new HashSet<>();
-
-
-    @ManyToOne
-    @JoinColumn (name = "empresa_id", referencedColumnName = "id")
-    private Empresa empresa;
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-
 
     public Long getId() {
         return this.id;
     }
 
 
-
     public String getNome() {
         return this.nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
 
-
     public String getCpf() {
         return this.cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
 
-
     public String getDataNascimento() {
         return this.dataNascimento;
     }
+
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
@@ -116,13 +95,5 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-
-    public Set<Curso> getCursos() {
-        return cursos;
-    }
-
-    public void setCursos(Set<Curso> cursos) {
-        this.cursos = cursos;
-    }
 }
+

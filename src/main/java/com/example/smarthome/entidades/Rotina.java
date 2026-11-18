@@ -14,7 +14,6 @@ public class Rotina {
     public Rotina(){}
 
     public Rotina(String nome, String status) {
-        this.id = 1L;
         this.nome = nome;
         this.status = status;
     }

@@ -1,0 +1,26 @@
+services:
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: meu-postgres-local
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=smarthome_6vjy_user
+      - POSTGRES_PASSWORD=TpcUoYWNFwhZKCT83EFIkhJakiND3xYr
+      - POSTGRES_DB=SmartHome
+    volumes:
+      - postgres-data-local:/var/lib/postgresql/data
+
+  api-spring:
+    container_name: minha-api
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/SmartHome
+      - SPRING_DATASOURCE_USERNAME=smarthome_6vjy_user
+      - SPRING_DATASOURCE_PASSWORD=TpcUoYWNFwhZKCT83EFIkhJakiND3xYr
+      - postgres-db
+
+volumes:
+  postgres-data-local:

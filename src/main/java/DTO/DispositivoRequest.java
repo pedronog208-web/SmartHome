@@ -1,5 +1,6 @@
 package DTO;
 
+import com.example.smarthome.entidades.Comodo;
 import com.example.smarthome.entidades.Dispositivo;
 
 public class DispositivoRequest {
@@ -11,6 +12,7 @@ public class DispositivoRequest {
     private String status;
     private Boolean conexao;
     private double consumoWatts;
+    private Long comodoId;
 
     public String getNome(){
         return this.nome;
@@ -48,5 +50,14 @@ public class DispositivoRequest {
     }
     public void setConsumoWatts(double consumoWatts){
         this.consumoWatts = consumoWatts;
+    }
+
+
+    public Long getComodoId() {
+        return comodoId;
+    }
+
+    public void setComodoId(Long comodoId) {
+        this.comodoId = comodoId;
     }
 }

@@ -23,10 +23,12 @@ public class ComodoController {
         this.comodoRepository = comodoRepository;
     }
 
+
     @GetMapping
     public List<Comodo> ConsultaPorComodo(){
-        return comodoRepository.findAll();
+        return comodoRepository.findAll().stream().filter(comodo -> !"Deletado".equals(comodo.getStatus())).toList();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Comodo> ConsultarComodoPorId(@PathVariable Long id){
@@ -43,7 +45,6 @@ public class ComodoController {
     public ResponseEntity<ComodoResponse> CadastrarComodo(@RequestBody ComodoRequest comodoRequest){
         Comodo comodoBanco = new Comodo();
 
-        comodoBanco.setId(1L);
         comodoBanco.setNome(comodoRequest.getNome());
         comodoBanco.setCategoria(comodoRequest.getCategoria());
 
@@ -54,7 +55,7 @@ public class ComodoController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ComodoResponse> AtualizarComodo(@PathVariable Long id, ComodoRequest comodoRequest){
+    public ResponseEntity<ComodoResponse> AtualizarComodo(@PathVariable Long id, @RequestBody  ComodoRequest comodoRequest){
 
         Comodo comodoBanco = comodoRepository.findById(id).orElse(null);
 
@@ -79,7 +80,7 @@ public class ComodoController {
 
         if (comodoBanco != null){
 
-            comodoBanco.setStatus("D");
+            comodoBanco.setStatus("Deletado");
 
             comodoRepository.save(comodoBanco);
 

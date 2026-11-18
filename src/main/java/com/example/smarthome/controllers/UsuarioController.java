@@ -1,13 +1,10 @@
 package com.example.smarthome.controllers;
 
 import DTO.*;
-import com.example.smarthome.entidades.Empresa;
 import com.example.smarthome.entidades.Usuario;
-import com.example.smarthome.repository.EmpresaRepository;
 import com.example.smarthome.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -19,9 +16,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private EmpresaRepository empresaRepository;
-
     @GetMapping
     public List<Usuario> ConsultaUsuario(){
         return usuarioRepository.findAll();
@@ -73,21 +67,15 @@ public class UsuarioController {
 
 
         if (usuarioBanco != null){
-
-
-            var empresaBanco = empresaRepository.findById(usuarioBanco.getId()).orElse(null);
-
-            if (empresaBanco == null){
-                return ResponseEntity.notFound().build();
-            }
-
-            usuarioBanco.setEmpresa(empresaBanco);
             usuarioBanco.setNome(usuarioRequest.getNome());
             usuarioBanco.setCpf(usuarioRequest.getCpf());
             usuarioBanco.setDataNascimento(usuarioRequest.getDataNascimento());
 
             usuarioBanco.setDataAtualizacao(LocalDateTime.now());
-            usuarioBanco.setSenha(usuarioRequest.getSenha());
+
+            if (usuarioRequest.getSenha() != null && !usuarioRequest.getSenha().isBlank()) {
+                usuarioBanco.setSenha(usuarioRequest.getSenha());
+            }
 
             usuarioRepository.save(usuarioBanco);
             return ResponseEntity.ok(new UsuarioResponse(usuarioBanco.getId(), "Usuário atualizado Com Sucesso"));
@@ -110,8 +98,11 @@ public class UsuarioController {
 
             usuarioBanco.setStatus(usuarioRequest.getStatus());
 
+            usuarioRepository.save(usuarioBanco);
 
-            return ResponseEntity.ok(new UsuarioResponse(usuarioBanco.getId(), "Cadastro Com Sucesso"));
+            return ResponseEntity.ok(new UsuarioResponse(usuarioBanco.getId(), "Status atualizado com sucesso!"));
+
+
         }
 
         return ResponseEntity.notFound().build();
@@ -129,7 +120,7 @@ public class UsuarioController {
 
         if (usuarioBanco != null){
 
-            usuarioBanco.setStatus("A");
+            usuarioBanco.setStatus("D");
             usuarioRepository.save(usuarioBanco);
 
             return ResponseEntity.ok().build();

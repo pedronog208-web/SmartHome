@@ -3,6 +3,7 @@ package com.example.smarthome.controllers;
 import DTO.AtualizarStatusRotinaRequest;
 import DTO.RotinaRequest;
 import DTO.RotinaResponse;
+import com.example.smarthome.entidades.Comodo;
 import com.example.smarthome.entidades.Rotina;
 import com.example.smarthome.repository.RotinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class RotinaController {
     }
 
     @GetMapping
-    public List<Rotina> consultaPorRotina(){
-        return rotinaRepository.findAll();
+    public List<Rotina> ConsultaPorRotina(){
+        return rotinaRepository.findAll().stream().filter(rotina -> !"Deletado".equals(rotina.getStatus())).toList();
     }
 
     @GetMapping("/{id}")
@@ -42,7 +43,6 @@ public class RotinaController {
     public ResponseEntity<RotinaResponse> CadastrarRotina(@RequestBody RotinaRequest rotinaRequest){
         Rotina rotinaBanco = new Rotina();
 
-        rotinaBanco.setId(1L);
         rotinaBanco.setNome(rotinaRequest.getNome());
         rotinaBanco.setStatus(rotinaRequest.getStatus());
 
@@ -71,7 +71,6 @@ public class RotinaController {
         Rotina rotinaBanco = rotinaRepository.findById(id).orElse(null);
 
         if (rotinaBanco != null){
-            rotinaBanco.setId(1L);
             rotinaBanco.setNome(rotinaRequest.getNome());
             rotinaBanco.setStatus(rotinaRequest.getStatus());
 
@@ -88,7 +87,7 @@ public class RotinaController {
         Rotina rotinaBanco = rotinaRepository.findById(id).orElse(null);
 
         if (rotinaBanco != null){
-            rotinaBanco.setStatusDelete("D");
+            rotinaBanco.setStatusDelete("Deletado");
 
             rotinaRepository.save(rotinaBanco);
 
